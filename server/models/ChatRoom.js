@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const chatSchema = new Schema(
   {
@@ -14,17 +14,15 @@ const chatSchema = new Schema(
     },
     users: [
       {
-        types: Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
       },
     ],
-    latestMessage: [
-      {
-        types: Schema.Types.ObjectId,
-        ref: 'Message',
-      },
-    ],
-    groupAdming: {
+    latestMessage: {
+      type: Schema.Types.ObjectId,
+      ref: 'Message',
+    },
+    groupAdmin: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
@@ -32,6 +30,6 @@ const chatSchema = new Schema(
   { timestamps: true }
 );
 
-const Chat = model('Chat', chatSchema);
+const ChatRoom = model('ChatRoom', chatSchema);
 
-export default Chat;
+module.exports = ChatRoom;

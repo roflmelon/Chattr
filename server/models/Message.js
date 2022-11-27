@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const messageSchema = new Schema(
   {
@@ -11,7 +11,7 @@ const messageSchema = new Schema(
       trim: true,
     },
     chat: {
-      types: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Chat',
     },
   },
@@ -20,4 +20,4 @@ const messageSchema = new Schema(
 
 const Message = model('Message', messageSchema);
 
-export default Message;
+module.exports = Message;
