@@ -1,27 +1,42 @@
-const http = require("http");
-const path = require("path");
-const socketio = require("socket.io");
-const express = require("express");
-const database = require("./database/connect");
-const service = require("./models");
+const path = require('path');
+const express = require('express');
+const dotenv = require('dotenv');
+const { ApolloServer } = require('apollo-server-express');
+const { typeDefs, resolvers } = require('./schemas');
+const { chats } = require('./seeds/seed');
+const connectDB = require('./config/connection');
+
 const app = express();
-const server = http.createServer(app);
-//socket.io installation
-const io = socketio(server, { cors: { origin: "http://localhost:3000" } });
-
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-database();
-io.on("connection", (socket) => service(io, socket));
-
-app.use("/api", require("./routes"));
-
-app.use("/images", express.static(path.join(__dirname, "../client/images")));
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-}
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/public/index.html"));
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
 });
+
+const PORT = process.env.PORT || 3001;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('yo');
+});
+app.get('/api/chat', (req, res) => {
+  res.send(chats);
+});
+
+const startApolloServer = async (typeDefs, resolvers) => {
+  await server.start();
+  server.applyMiddleware({ app });
+
+  connectDB.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+      console.log(
+        `Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`
+      );
+    });
+  });
+};
+
+//starts the server
+startApolloServer(typeDefs, resolvers);
