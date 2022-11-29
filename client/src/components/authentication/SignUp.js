@@ -10,7 +10,7 @@ import { QUERY_USERS } from '../../utils/userQuery';
 import Auth from '../../utils/auth';
 
 const SignUp = () => {
-  const [show, setShow] = useState('Hide');
+  const [show, setShow] = useState('Show');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,7 +27,7 @@ const SignUp = () => {
 
   //uploads image to cloudinary
   const postDetails = (picture) => {
-    setLoading(true);
+    setLoading(false);
     if (picture === undefined) {
       toast({
         title: 'Please select an Image!',
@@ -70,7 +70,7 @@ const SignUp = () => {
   };
 
   const submitHandler = async () => {
-    setLoading(true);
+    setLoading(false);
     if (!username || !email || !password || !confirmPassword) {
       toast({
         title: 'Please Fill Out All Fields!',
@@ -92,6 +92,16 @@ const SignUp = () => {
       });
       return;
     }
+    if (!picture) {
+      toast({
+        title: 'Upload a profile picture!',
+        status: 'warning',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      return;
+    }
     try {
       const { data } = await addUser({
         variables: {
@@ -101,9 +111,9 @@ const SignUp = () => {
           picture: picture,
         },
       });
+      console.info(data);
       Auth.login(data.addUser.token);
     } catch (err) {
-      console.log(error);
       console.log(err);
     }
   };
@@ -133,13 +143,13 @@ const SignUp = () => {
         <FormLabel>Password:</FormLabel>
         <InputGroup>
           <Input
-            type={show ? 'text' : 'password'}
+            type={show ? 'password' : 'text'}
             placeholder="Enter Your Password"
             onChange={(event) => setPassword(event.target.value)}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={showPassword}>
-              {show ? 'Hide' : 'Show'}
+              {show ? 'Show' : 'Hide'}
             </Button>
           </InputRightElement>
         </InputGroup>
@@ -150,13 +160,13 @@ const SignUp = () => {
         <FormLabel>Confirm Password:</FormLabel>
         <InputGroup>
           <Input
-            type={show ? 'text' : 'password'}
+            type={show ? 'password' : 'text'}
             placeholder="Confirm Password"
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={showPassword}>
-              {show ? 'Hide' : 'Show'}
+              {show ? 'Show' : 'Hide'}
             </Button>
           </InputRightElement>
         </InputGroup>

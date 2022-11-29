@@ -35,7 +35,15 @@ const resolvers = {
         console.log(error.message);
       }
     },
-    addUser: async (parent, { username, email, password, picture }) => {
+    addUser: async (
+      parent,
+      {
+        username,
+        email,
+        password,
+        picture = 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+      }
+    ) => {
       try {
         const user = await User.create({
           username,
