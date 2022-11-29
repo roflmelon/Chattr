@@ -4,12 +4,15 @@ const dotenv = require('dotenv');
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas');
 const { chats } = require('./seeds/seed');
-const connectDB = require('./config/connection');
+const db = require('./config/connection');
+const { authMiddleware } = require('./utils/auth');
+dotenv.config();
 
 const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: authMiddleware,
 });
 
 const PORT = process.env.PORT || 3001;
@@ -17,9 +20,6 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('yo');
-});
 app.get('/api/chat', (req, res) => {
   res.send(chats);
 });
@@ -28,7 +28,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
 
-  connectDB.once('open', () => {
+  db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
       console.log(
