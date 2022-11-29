@@ -24,8 +24,8 @@ Real-time updates to the user list, conversation list, and conversation messages
 
 #### Screenshots
 
-##### Global Chat
-![Global Chat](https://i.imgur.com/VkdwAme.png)
+
+![Global Chat](  Global Chat<img width="1436" alt="Screen Shot 2022-11-29 at 11 44 26 AM" src="https://user-images.githubusercontent.com/85970879/204591216-10d4c70f-d735-4848-8de2-99663bf98552.png">                )
 <br/><br/>
 ![Private Chat](https://i.imgur.com/jdCBYu4.png)
 <br/><br/>
