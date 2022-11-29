@@ -18,7 +18,7 @@ const SignUp = () => {
   const [picture, setPicture] = useState('');
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-
+// Error is decleared but never read
   const [addUser, { error }] = useMutation(ADD_USER);
 
   const showPassword = () => {
