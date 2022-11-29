@@ -39,8 +39,8 @@ const LandingPage = () => {
       <Box p={4} bg={'white'} w="100%" borderRadius={'lg'} borderWidth={'1px'}>
         <Tabs variant="soft-rounded" colorScheme="green">
           <TabList mb="1rem">
-            <Tab width="50%">Login</Tab>
-            <Tab width="50%">Sign Up</Tab>
+            <Tab width="50%">Login Please</Tab>
+            <Tab width="50%">Sign-Up Please</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
