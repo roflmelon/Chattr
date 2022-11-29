@@ -34,16 +34,13 @@ const typeDefs = gql`
 
   type Mutation {
     login(email: String!, password: String!): Auth
-
     addUser(
       username: String!
       email: String!
       password: String!
       picture: String
     ): Auth
-
     addMessage(userId: ID!, content: String!, chatRoomId: ID!): Message
-
     addChatRoom(
       roomName: String!
       isGroupChat: Boolean
