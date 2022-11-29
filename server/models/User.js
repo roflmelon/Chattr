@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const { default: isEmail } = require('validator/lib/isemail');
 const isStrongPassword = require('validator/lib/isStrongPassword');
 const bcrypt = require('bcrypt');
 
@@ -18,7 +17,7 @@ const userSchema = new Schema({
     //e is the element value recieved from the form
     validate: {
       validator: function (e) {
-        return isEmail(e);
+        return e.match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/);
       },
       message: 'Not a valid email.',
     },
