@@ -1,0 +1,44 @@
+.container {
+  height: 100%;
+  overflow: scroll;
+}
+
+.userBox {
+  background-color: orange;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  border-radius: 0.5rem;
+}
+
+.userBoxTitle {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  font-size: 24px;
+}
+.userCard {
+  display: flex;
+  background-color: orange;
+  padding-right: 1.4rem;
+  margin-bottom: 0.8rem;
+  border-radius: 0.5rem;
+}
+.overflowTrim {
+  overflow: hidden;
+  display: flex;
+  background-color: orange;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  padding: 0.5rem;
+}
+.userPicture {
+  border-radius: 50%;
+  height: fit-content;
+  width: 36px;
+}
+.username {
+  text-align: center;
+  margin-left: 0.5rem;
+  line-height: 2rem;
+  font-size: 1.5rem;
+}

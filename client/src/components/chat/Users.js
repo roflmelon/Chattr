@@ -1,41 +1,21 @@
 import React from 'react';
-import { Box, TabPanel, TabPanels } from '@chakra-ui/react';
+import { useQuery } from '@apollo/client';
+import styles from './css/users.module.css';
+import Logout from '../authentication/Logout';
+import UserCard from './UserCard.js';
+import { QUERY_USERS } from '../../utils/userQuery';
 
 export const Users = () => {
-  const styles = {
-    userBox: {
-      backgroundColor: '#3366ff',
-      padding: '1rem',
-      borderRadius: '1rem',
-      marginBottom: '0.5rem',
-      color: 'white',
-    },
-    container: {
-      padding: '0.5rem',
-    },
-  };
+  const { loading, data } = useQuery(QUERY_USERS);
+
+  const users = data?.getUsers || [];
+  console.log(users);
+
   return (
-    <TabPanels>
-      <TabPanel overflow="scroll">
-        <Box style={styles.container}>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-          <Box style={styles.userBox}>users</Box>
-        </Box>
-      </TabPanel>
-    </TabPanels>
+    <div className={styles.container}>
+      <Logout />
+      <h2 className={styles.userBoxTitle}>Users:</h2>
+      {loading ? <div>Loading...</div> : <UserCard />}
+    </div>
   );
 };
