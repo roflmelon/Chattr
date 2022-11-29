@@ -25,14 +25,15 @@ Real-time updates to the user list, conversation list, and conversation messages
 #### Screenshots
 
 
-![Global Chat](  Global Chat<img width="1436" alt="Screen Shot 2022-11-29 at 11 44 26 AM" src="https://user-images.githubusercontent.com/85970879/204591216-10d4c70f-d735-4848-8de2-99663bf98552.png">                )
+- Log in <img width="1436" alt="Screen Shot 2022-11-29 at 11 44 26 AM" src="https://user-images.githubusercontent.com/85970879/204591216-10d4c70f-d735-4848-8de2-99663bf98552.png">                
 <br/><br/>
-![Private Chat](https://i.imgur.com/jdCBYu4.png)
+
+- Sign-up <img width="1436" alt="Screen Shot 2022-11-29 at 11 44 58 AM" src="https://user-images.githubusercontent.com/85970879/204592462-4510ce62-ec45-464a-81bc-16f8619222d5.png">   
 <br/><br/>
-![Login](https://i.imgur.com/6iobucn.png)
+
+Chat Room <img width="1436" alt="Screen Shot 2022-11-29 at 11 46 10 AM" src="https://user-images.githubusercontent.com/85970879/204592967-2ebac93f-40d0-4b6c-bf18-be4f724a4983.png">
 <br/><br/>
-##### Register
-![Register](https://i.imgur.com/AMkpl9C.png)
+
 
 ## Link 
 https://chattr.herokuapp.com/
