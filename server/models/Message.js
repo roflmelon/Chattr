@@ -10,9 +10,9 @@ const messageSchema = new Schema(
       type: String,
       trim: true,
     },
-    chat: {
+    chatRoom: {
       type: Schema.Types.ObjectId,
-      ref: 'Chat',
+      ref: 'ChatRoom',
     },
   },
   { timestamps: true }

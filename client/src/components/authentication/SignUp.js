@@ -1,9 +1,13 @@
 import React from 'react';
-import { Button, ButtonGroup } from '@chakra-ui/react';
+import { Button, ButtonGroup, useToast } from '@chakra-ui/react';
 import { VStack } from '@chakra-ui/layout';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import { ADD_USER } from '../../utils/userMutation';
+import { QUERY_USERS } from '../../utils/userQuery';
+import Auth from '../../utils/auth';
 
 const SignUp = () => {
   const [show, setShow] = useState('Hide');
@@ -12,13 +16,97 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [picture, setPicture] = useState('');
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
+
+  const [addUser, { error }] = useMutation(ADD_USER);
 
   const showPassword = () => {
     setShow(!show);
   };
-  const postDetails = (picture) => {};
 
-  const submitHandler = () => {};
+  //uploads image to cloudinary
+  const postDetails = (picture) => {
+    setLoading(true);
+    if (picture === undefined) {
+      toast({
+        title: 'Please select an Image!',
+        status: 'warning',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      return;
+    }
+    if (picture.type === 'image/jpeg' || picture.type === 'image/png') {
+      const data = new FormData();
+      data.append('file', picture);
+      data.append('upload_preset', 'chattr');
+      data.append('cloud_name', 'dstzcxbgk');
+      fetch('https://api.cloudinary.com/v1_1/dstzcxbgk/image/upload', {
+        method: 'POST',
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPicture(data.url.toString());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    } else {
+      toast({
+        title: 'Please select an Image!',
+        status: 'warning',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      setLoading(false);
+      return;
+    }
+  };
+
+  const submitHandler = async () => {
+    setLoading(true);
+    if (!username || !email || !password || !confirmPassword) {
+      toast({
+        title: 'Please Fill Out All Fields!',
+        status: 'warning',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      setLoading(false);
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast({
+        title: 'Passwords Do Not Match!',
+        status: 'warning',
+        duration: 4000,
+        isClosable: true,
+        position: 'bottom',
+      });
+      return;
+    }
+    try {
+      const { data } = await addUser({
+        variables: {
+          username: username,
+          email: email,
+          password: password,
+          picture: picture,
+        },
+      });
+      Auth.login(data.addUser.token);
+    } catch (err) {
+      console.log(error);
+      console.log(err);
+    }
+  };
 
   return (
     <VStack spacing="1rem">
@@ -46,7 +134,7 @@ const SignUp = () => {
         <InputGroup>
           <Input
             type={show ? 'text' : 'password'}
-            placeholder="Enter A Password"
+            placeholder="Enter Your Password"
             onChange={(event) => setPassword(event.target.value)}
           />
           <InputRightElement width="4.5rem">
@@ -63,7 +151,7 @@ const SignUp = () => {
         <InputGroup>
           <Input
             type={show ? 'text' : 'password'}
-            placeholder="Enter A Password"
+            placeholder="Confirm Password"
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
           <InputRightElement width="4.5rem">
@@ -86,7 +174,12 @@ const SignUp = () => {
       </FormControl>
 
       {/* form submit */}
-      <Button colorScheme="green" width="50%" onClick={submitHandler}>
+      <Button
+        colorScheme="green"
+        width="50%"
+        onClick={submitHandler}
+        isLoading={loading}
+      >
         Sign Up
       </Button>
     </VStack>

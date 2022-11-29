@@ -15,7 +15,7 @@ const Login = () => {
     setShow(!show);
   };
 
-  const submitHandler = () => {};
+  const submitHandler = async () => {};
 
   return (
     <VStack spacing="1rem">
@@ -43,7 +43,7 @@ const Login = () => {
         <InputGroup>
           <Input
             type={show ? 'text' : 'password'}
-            placeholder="Enter A Password"
+            placeholder="Enter Your Password"
             onChange={(event) => setPassword(event.target.value)}
           />
           <InputRightElement width="4.5rem">
@@ -56,7 +56,7 @@ const Login = () => {
 
       {/* form submit */}
       <Button colorScheme="green" width="50%" onClick={submitHandler}>
-        Sign Up
+        Login
       </Button>
     </VStack>
   );
