@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const isStrongPassword = require('validator/lib/isStrongPassword');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -28,13 +27,7 @@ const userSchema = new Schema({
     //validate using regex
     validate: {
       validator: function (e) {
-        return isStrongPassword(e, {
-          minLength: 8,
-          minLowercase: 0,
-          minUppercase: 0,
-          minNumbers: 0,
-          minSymbols: 0,
-        });
+        return e.length >= 8 ? true : false;
       },
       message: 'At least 8 characters.',
     },
