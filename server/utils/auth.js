@@ -24,7 +24,7 @@ module.exports = {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.user = data;
     } catch {
-      console.log('Invalid token');
+      console.log('Invalid Token');
     }
 
     // return the request object so it can be passed to the resolver as `context`
